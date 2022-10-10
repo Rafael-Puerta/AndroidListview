@@ -1,14 +1,18 @@
 package com.example.listview;
 
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
             intents = _intents;
             nom = _nom;
             imagencita=_img;
+        }
+        public int getIntents(){
+            return intents;
         }
     }
     // Model = Taula de records: utilitzem ArrayList
@@ -71,8 +78,8 @@ public class MainActivity extends AppCompatActivity {
         records = new ArrayList<Record>();
         // Afegim alguns exemples
         records.add( new Record(33,"Manolo",getResources().getDrawable(R.drawable.perfil7)) );
-        records.add( new Record(12,"Pepe",getResources().getDrawable(R.drawable.perfil7)) );
-        records.add( new Record(42,"Laura",getResources().getDrawable(R.drawable.perfil7)) );
+        records.add( new Record(12,"Pepe",getResources().getDrawable(R.drawable.perfil6)) );
+        records.add( new Record(42,"Laura",getResources().getDrawable(R.drawable.perfil5)) );
 
         // Inicialitzem l'ArrayAdapter amb el layout pertinent
         adapter = new ArrayAdapter<Record>( this, R.layout.list_item, records )
@@ -113,5 +120,19 @@ public class MainActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
         });
+
+        Button bu = (Button) findViewById(R.id.ordena);
+        bu.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View v) {
+                Collections.sort(records, Comparator.comparing(Record::getIntents).thenComparing(Record::getIntents));
+                // notificar l'adapter dels canvis al model
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+
+
     }
 }
