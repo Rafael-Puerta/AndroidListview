@@ -1,5 +1,6 @@
 package com.example.listview;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +16,12 @@ public class MainActivity extends AppCompatActivity {
     class Record {
         public int intents;
         public String nom;
+        public Drawable imagencita;
 
-        public Record(int _intents, String _nom ) {
+        public Record(int _intents, String _nom ,Drawable _img) {
             intents = _intents;
             nom = _nom;
+            imagencita=_img;
         }
     }
     // Model = Taula de records: utilitzem ArrayList
@@ -53,13 +56,23 @@ public class MainActivity extends AppCompatActivity {
         nombres.add("Josep");
 
 
+        //R.drawable.
+        ArrayList<Drawable> images=new ArrayList<Drawable>();
+        images.add(getResources().getDrawable(R.drawable.perfil1));
+        images.add(getResources().getDrawable(R.drawable.perfil2));
+        images.add(getResources().getDrawable(R.drawable.perfil3));
+        images.add(getResources().getDrawable(R.drawable.perfil4));
+        images.add(getResources().getDrawable(R.drawable.perfil5));
+        images.add(getResources().getDrawable(R.drawable.perfil6));
+        images.add(getResources().getDrawable(R.drawable.perfil7));
+
 
         // Inicialitzem model
         records = new ArrayList<Record>();
         // Afegim alguns exemples
-        records.add( new Record(33,"Manolo") );
-        records.add( new Record(12,"Pepe") );
-        records.add( new Record(42,"Laura") );
+        records.add( new Record(33,"Manolo",getResources().getDrawable(R.drawable.perfil7)) );
+        records.add( new Record(12,"Pepe",getResources().getDrawable(R.drawable.perfil7)) );
+        records.add( new Record(42,"Laura",getResources().getDrawable(R.drawable.perfil7)) );
 
         // Inicialitzem l'ArrayAdapter amb el layout pertinent
         adapter = new ArrayAdapter<Record>( this, R.layout.list_item, records )
@@ -75,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
                 // "Pintem" valors (també quan es refresca)
                 ((TextView) convertView.findViewById(R.id.nom)).setText(getItem(pos).nom);
                 ((TextView) convertView.findViewById(R.id.intents)).setText(Integer.toString(getItem(pos).intents));
+                ((ImageView) convertView.findViewById(R.id.imagencita)).setImageDrawable(getItem(pos).imagencita);
                 return convertView;
             }
 
@@ -92,7 +106,8 @@ public class MainActivity extends AppCompatActivity {
                 for (int i=0;i<3;i++) {
                     int rand1= (int) (Math.random()*50)+1;
                     int rand2= (int) (Math.random()*15);
-                    records.add(new Record(rand1, nombres.get(rand2)));
+                    int rand3= (int) (Math.random()*7);
+                    records.add(new Record(rand1, nombres.get(rand2),images.get(rand3)));
                 }
                 // notificar l'adapter dels canvis al model
                 adapter.notifyDataSetChanged();
