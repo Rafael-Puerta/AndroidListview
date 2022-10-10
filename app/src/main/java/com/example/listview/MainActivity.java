@@ -24,6 +24,9 @@ public class MainActivity extends AppCompatActivity {
     // Model = Taula de records: utilitzem ArrayList
     ArrayList<Record> records;
 
+
+
+
     // ArrayAdapter serà l'intermediari amb la ListView
     ArrayAdapter<Record> adapter;
 
@@ -31,6 +34,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ArrayList<String> nombres=new ArrayList<String>();
+        nombres.add("Isma");
+        nombres.add("Irene");
+        nombres.add("Ivan");
+        nombres.add("Albert");
+        nombres.add("Enric");
+        nombres.add("Pablo");
+        nombres.add("Rafa");
+        nombres.add("Sergio");
+        nombres.add("Jordi");
+        nombres.add("Borja");
+        nombres.add("Alejandro");
+        nombres.add("Lluis");
+        nombres.add("Marc");
+        nombres.add("Erik");
+        nombres.add("Josep");
+
+
 
         // Inicialitzem model
         records = new ArrayList<Record>();
@@ -67,8 +89,10 @@ public class MainActivity extends AppCompatActivity {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (int i=0;i<500;i++) {
-                    records.add(new Record(100, "Anonymous"));
+                for (int i=0;i<3;i++) {
+                    int rand1= (int) (Math.random()*50)+1;
+                    int rand2= (int) (Math.random()*15);
+                    records.add(new Record(rand1, nombres.get(rand2)));
                 }
                 // notificar l'adapter dels canvis al model
                 adapter.notifyDataSetChanged();
